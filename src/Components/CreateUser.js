@@ -1,10 +1,11 @@
 import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const CreateUser = () => {
     const [inputs, setInputs] = useState([]);
-
+    const navigate = useNavigate();
     const handleChange = (event)=>{
         event.preventDefault();
         const name = event.target.name;
@@ -20,6 +21,7 @@ const CreateUser = () => {
             if(response){
                 setInputs([]);
                 alert("Values are added");
+                navigate('/');
             }
             setInputs({ name: '', email: '', mobile: '' }); 
         } catch (error) {

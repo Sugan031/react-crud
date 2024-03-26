@@ -7,14 +7,12 @@ const UpdateUser = () => {
     const navigate = useNavigate();
     const [inputs, setInputs] = useState([]);
     const {id} = useParams();
-
      useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost/project/api/user/${id}/edit`);
-                console.log(response.data);
+                const response = await axios.get(`http://localhost/project/api/user/${id}`);
+                // console.log(response.data);
                 setInputs(response.data);
-                console.log(inputs);
                
             } catch (error) {
                 console.error('Error fetching users:', error);
@@ -22,7 +20,16 @@ const UpdateUser = () => {
         };
 
         fetchData();
-    }, []);
+    }, [id]);
+    // useEffect(() => {
+    //     getUser();
+    // }, []);
+    // async function getUser() {
+    //    await axios.get(`http://localhost/project/api/user/${id}`).then(function(response) {
+    //         console.log(response.data);
+    //         setInputs(response.data);
+    //     });
+    // }
     
 
     const handleChange = (event)=>{
@@ -35,14 +42,15 @@ const UpdateUser = () => {
     const handleSubmit =  async(event) => {
         event.preventDefault();
         try {
-            const response = await axios.put('http://localhost/project/api/user/save', inputs);
-            console.log(response.data);
+            const response = await axios.put(`http://localhost/project/api/user/${id}/edit`, inputs);
+            console.log(response);
             if(response){
                 setInputs([]);
                 alert("Values are added");
+                navigate('/');
             }
             setInputs({ name: '', email: '', mobile: '' }); 
-            navigate('/');
+           
         } catch (error) {
             console.error('Error while submitting form:', error);
         }
@@ -58,9 +66,9 @@ const UpdateUser = () => {
                 noValidate
                 autoComplete="off"
         >
-             <TextField id="outlined-name" value={inputs.name}  label="Name" variant="outlined" name='name' onChange={handleChange}/>
-             <TextField id="outlined-email" value={inputs.email} label="Email" variant="outlined" name='email' onChange={handleChange} />
-             <TextField id="outlined-mobile" value={inputs.mobile} label="Mobile No." variant="outlined" name='mobile' onChange={handleChange} />
+             <TextField id="outlined-name" value={inputs.name}  label="Name" variant="outlined" name='name' InputLabelProps={{ shrink: inputs.name ? true : false }} onChange={handleChange}/>
+             <TextField id="outlined-email" value={inputs.email} label="Email" variant="outlined" name='email' InputLabelProps={{ shrink: inputs.email ? true : false }} onChange={handleChange} />
+             <TextField id="outlined-mobile" value={inputs.mobile} label="Mobile No." variant="outlined" name='mobile' InputLabelProps={{ shrink: inputs.mobile ? true : false }} onChange={handleChange} />
              <Stack spacing={2} direction="row">
                 <Button variant="contained" type='submit' onClick={handleSubmit}>Submit</Button>
             </Stack>

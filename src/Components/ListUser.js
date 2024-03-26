@@ -2,11 +2,16 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ListUser = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
+        fetchData(); // Call fetchData when component mounts
+    }, []);
+
         const fetchData = async () => {
             try {
                 const response = await axios.get('http://localhost/project/api/user');
@@ -17,9 +22,17 @@ const ListUser = () => {
             }
         };
 
-        fetchData();
-    }, []);
 
+    const deleteUser = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost/project/api/user/${id}/delete`);
+            console.log(response.data);
+            // After successful deletion, refetch the data to update the user list
+            fetchData();
+        } catch (error) {
+            console.error('Error deleting user:', error);
+        }
+    };
 
     return (
         <TableContainer>
@@ -30,7 +43,7 @@ const ListUser = () => {
                         <TableCell>Name</TableCell>
                         <TableCell>Email</TableCell>
                         <TableCell>Mobile</TableCell>
-                        <TableCell>Actions</TableCell>
+                        <TableCell colSpan={2} sx={{justifyContent:'center', display:'flex'}}>Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -44,8 +57,9 @@ const ListUser = () => {
                             <TableCell>{user.email}</TableCell>
                             <TableCell>{user.mobile}</TableCell>
                             <TableCell>
-                                <Link to={`user/${user.id}/edit`} style={{ marginRight: "10px" }}>Edit</Link>
+                                <Link to={`user/${user.id}/edit`} style={{ marginRight: "10px" }}><EditIcon/></Link>
                             </TableCell>
+                            <TableCell><DeleteIcon color='primary' onClick={() => deleteUser(user.id)} /></TableCell>
                         </TableRow>
                      ))}
                 </TableBody>
