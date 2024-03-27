@@ -21,17 +21,7 @@ const UpdateUser = () => {
 
         fetchData();
     }, [id]);
-    // useEffect(() => {
-    //     getUser();
-    // }, []);
-    // async function getUser() {
-    //    await axios.get(`http://localhost/project/api/user/${id}`).then(function(response) {
-    //         console.log(response.data);
-    //         setInputs(response.data);
-    //     });
-    // }
     
-
     const handleChange = (event)=>{
         event.preventDefault();
         const name = event.target.name;

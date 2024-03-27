@@ -27,7 +27,6 @@ const ListUser = () => {
         try {
             const response = await axios.delete(`http://localhost/project/api/user/${id}/delete`);
             console.log(response.data);
-            // After successful deletion, refetch the data to update the user list
             fetchData();
         } catch (error) {
             console.error('Error deleting user:', error);
