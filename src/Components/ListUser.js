@@ -14,7 +14,7 @@ const ListUser = () => {
 
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost/project/api/user');
+                const response = await axios.get('http://127.0.0.1:8000/api/index');
                 setUsers(response.data);
                
             } catch (error) {
@@ -22,10 +22,9 @@ const ListUser = () => {
             }
         };
 
-
     const deleteUser = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost/project/api/user/${id}/delete`);
+            const response = await axios.delete(`http://127.0.0.1:8000/api/index/${id}/delete`);
             console.log(response.data);
             fetchData();
         } catch (error) {
@@ -51,7 +50,7 @@ const ListUser = () => {
                             key={key}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            <TableCell component="th" scope="row">{user.id}</TableCell>
+                            <TableCell component="th" scope="row">{key+1}</TableCell>
                             <TableCell>{user.name}</TableCell>
                             <TableCell>{user.email}</TableCell>
                             <TableCell>{user.mobile}</TableCell>

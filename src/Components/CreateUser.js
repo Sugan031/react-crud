@@ -16,7 +16,7 @@ const CreateUser = () => {
     const handleSubmit =  async(event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost/project/api/user/save', inputs);
+            const response = await axios.post('http://127.0.0.1:8000/api/register', inputs);
             console.log(response.data);
             if(response){
                 setInputs([]);

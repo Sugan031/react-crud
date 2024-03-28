@@ -1,22 +1,32 @@
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { AppBar, Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from "@mui/material";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import ListIcon from '@mui/icons-material/List';
 import CreateIcon from '@mui/icons-material/Create';
 import ListUser from "./Components/ListUser";
 import CreateUser from "./Components/CreateUser";
 import UpdateUser from "./Components/UpdateUser";
+import styled from "@emotion/styled";
 
 function App() {
+
+  const StyledToolbar = styled(Toolbar)({
+    display: 'flex',
+    justifyContent : 'space-between',
+    backgroundColor:'white'
+})
+
+
   return (
-    <Box>
-      <Typography variant="h5" component='h1' sx={{fontFamily:'sans-serif'}}>
+    <BrowserRouter>
+   
+       <AppBar position='sticky'>
+       <StyledToolbar >
+      <Typography variant="h5" component='h1' sx={{fontFamily:'sans-serif', color:'blue'}}>
         React CRUD operations using PHP API and MySQL
       </Typography>
-      <BrowserRouter>
-      <nav aria-label="main mailbox folders">
-        <List>
-          <ListItem disablePadding>
-          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+   
+      <Box sx={{display:'flex', alignItems:'center', gap:'20px'}}>
+          <Link to="/" style={{ textDecoration: 'none', color: 'blue' }}>
             <ListItemButton>
               <ListItemIcon>
                 <ListIcon />
@@ -24,9 +34,8 @@ function App() {
               <ListItemText primary="List User" />
             </ListItemButton>
             </Link>
-          </ListItem>
-          <ListItem disablePadding>
-          <Link to="user/create" style={{ textDecoration: 'none', color: 'inherit' }}>
+          
+          <Link to="user/create" style={{ textDecoration: 'none', color: 'blue' }}>
             <ListItemButton>
               <ListItemIcon>
                 <CreateIcon />
@@ -34,16 +43,15 @@ function App() {
               <ListItemText primary="Create User" />
             </ListItemButton>
             </Link>
-          </ListItem>
-          </List>
-        </nav>
-        <Routes>
+       </Box>
+       </StyledToolbar>
+      </AppBar>
+      <Routes>
           <Route index element={<ListUser/>}></Route>
           <Route path="user/create" element={<CreateUser/>}></Route>
           <Route path="user/:id/edit" element={<UpdateUser/>}></Route>
         </Routes>
       </BrowserRouter>
-    </Box>
   );
 }
 
