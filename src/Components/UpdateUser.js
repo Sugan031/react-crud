@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios';
 import { Box, Button, Stack, TextField, Typography } from '@mui/material';
+import Home from './Home';
 
 const UpdateUser = () => {
     const navigate = useNavigate();
@@ -36,7 +37,7 @@ const UpdateUser = () => {
             if(response){
                 setInputs([]);
                 alert("Values are added");
-                navigate('/');
+                navigate('user');
             }
             setInputs({ name: '', email: '', mobile: '' }); 
            
@@ -46,17 +47,25 @@ const UpdateUser = () => {
     }
   return (
     <div>
-         <Typography variant='h4'sx={{fontFamily:'sans-serif', fontStyle:'oblique'}}>Update User</Typography>
-        
+        <Home/>
+        <Box display='flex' justifyContent='center' marginTop='100px'>
         <Box
                 component="form"
                  sx={{
                         '& > :not(style)': { m: 1, width: '25ch' },
+                        border:'1px solid black',
+                        borderRadius:'10px',
+                        boxShadow:'5px 5px hsla(0,0%,0%,0.1)',
+                        padding:'20px',
+                        margin:'10px',
+                        display:'inline-block',
+                        alignItems:'end',
+                        maxWidth:'300px',
                 }}
                 noValidate
                 autoComplete="off"
         >
-             
+              <Typography variant='h4'sx={{fontFamily:'sans-serif', fontStyle:'oblique'}}>Update User</Typography>
                 <TextField id="outlined-name" value={inputs.name}  label="Name" variant="outlined" name='name' InputLabelProps={{ shrink: inputs.name ? true : false }} onChange={handleChange}/>
                 <TextField id="outlined-email" value={inputs.email} label="Email" variant="outlined" name='email' InputLabelProps={{ shrink: inputs.email ? true : false }} onChange={handleChange} />
                 <TextField id="outlined-mobile" value={inputs.mobile} label="Mobile No." variant="outlined" name='mobile' InputLabelProps={{ shrink: inputs.mobile ? true : false }} onChange={handleChange} />
@@ -65,7 +74,7 @@ const UpdateUser = () => {
                 <Button variant="contained" type='submit' onClick={handleSubmit}>Submit</Button>
             </Stack>
         </Box>
-      
+        </Box>
     </div>
   )
 }

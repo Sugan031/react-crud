@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Home from './Home';
 
 const ListUser = () => {
     const [users, setUsers] = useState([]);
@@ -23,6 +24,7 @@ const ListUser = () => {
         };
 
     const deleteUser = async (id) => {
+        if(window.confirm("Do you really want to delete?")){
         try {
             const response = await axios.delete(`http://127.0.0.1:8000/api/index/${id}/delete`);
             console.log(response.data);
@@ -30,9 +32,12 @@ const ListUser = () => {
         } catch (error) {
             console.error('Error deleting user:', error);
         }
+    }
     };
 
     return (
+        <>
+        <Home/>
         <TableContainer>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
@@ -55,7 +60,7 @@ const ListUser = () => {
                             <TableCell>{user.email}</TableCell>
                             <TableCell>{user.mobile}</TableCell>
                             <TableCell>
-                                <Link to={`user/${user.id}/edit`} style={{ marginRight: "10px" }}><EditIcon/></Link>
+                                <Link to={`/user/${user.id}/edit`} style={{ marginRight: "10px" }}><EditIcon/></Link>
                             </TableCell>
                             <TableCell><DeleteIcon color='primary' onClick={() => deleteUser(user.id)} /></TableCell>
                         </TableRow>
@@ -63,6 +68,7 @@ const ListUser = () => {
                 </TableBody>
             </Table>
         </TableContainer>
+        </>
     );
 };
 
